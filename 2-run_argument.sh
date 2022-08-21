@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=7 python run_ner.py \
+    --dataset DuEE-Fin \
+    --event_type role \
+    --max_len 400 \
+    --num_train_epochs 50 \
+    --per_gpu_train_batch_size 8 \
+    --gradient_accumulation_steps 8 \
+    --per_gpu_eval_batch_size 32 \
+    --model_name_or_path /data/qingyang/data/chinese-roberta-wwm-ext \
+    --learning_rate 1e-5 \
+    --linear_learning_rate 5e-5 \
+    --early_stop 4 

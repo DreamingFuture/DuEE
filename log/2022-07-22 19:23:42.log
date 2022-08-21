@@ -1,0 +1,10 @@
+Starting new HTTPS connection (1): huggingface.co:443
+https://huggingface.co:443 "HEAD //data/zhoujx/prev_trained_model/rbt3/resolve/main/vocab.txt HTTP/1.1" 404 0
+Starting new HTTPS connection (1): huggingface.co:443
+https://huggingface.co:443 "HEAD //data/zhoujx/prev_trained_model/rbt3/resolve/main/tokenizer.json HTTP/1.1" 404 0
+Starting new HTTPS connection (1): huggingface.co:443
+https://huggingface.co:443 "HEAD //data/zhoujx/prev_trained_model/rbt3/resolve/main/added_tokens.json HTTP/1.1" 404 0
+Starting new HTTPS connection (1): huggingface.co:443
+https://huggingface.co:443 "HEAD //data/zhoujx/prev_trained_model/rbt3/resolve/main/special_tokens_map.json HTTP/1.1" 404 0
+Starting new HTTPS connection (1): huggingface.co:443
+https://huggingface.co:443 "HEAD //data/zhoujx/prev_trained_model/rbt3/resolve/main/tokenizer_config.json HTTP/1.1" 404 0

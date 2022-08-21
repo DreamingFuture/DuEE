@@ -1,0 +1,11 @@
+Model name '/data/qingyang/data/chinese-roberta-wwm-ext' not found in model shortcut name list (bert-base-uncased, bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased, bert-base-multilingual-cased, bert-base-chinese, bert-base-german-cased, bert-large-uncased-whole-word-masking, bert-large-cased-whole-word-masking, bert-large-uncased-whole-word-masking-finetuned-squad, bert-large-cased-whole-word-masking-finetuned-squad, bert-base-cased-finetuned-mrpc, bert-base-german-dbmdz-cased, bert-base-german-dbmdz-uncased, bert-base-finnish-cased-v1, bert-base-finnish-uncased-v1, bert-base-dutch-cased). Assuming '/data/qingyang/data/chinese-roberta-wwm-ext' is a path, a model identifier, or url to a directory containing tokenizer files.
+Didn't find file /data/qingyang/data/chinese-roberta-wwm-ext/added_tokens.json. We won't load it.
+loading file /data/qingyang/data/chinese-roberta-wwm-ext/vocab.txt
+loading file None
+loading file /data/qingyang/data/chinese-roberta-wwm-ext/special_tokens_map.json
+loading file /data/qingyang/data/chinese-roberta-wwm-ext/tokenizer_config.json
+Using bos_token, but it is not set yet.
+Using bos_token, but it is not set yet.
+Using eos_token, but it is not set yet.
+Using eos_token, but it is not set yet.
+Fast tokenizers add special tokens by default. To remove special tokens, please specify`add_special_tokens=False` during the initialisation rather than when calling `encode`,`encode_plus` or `batch_encode_plus`.

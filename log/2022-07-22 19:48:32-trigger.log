@@ -1,0 +1,19 @@
+The nums of the train_dataset features is 7238
+The nums of the eval_dataset features is 1176
+***** Running train *****
+The F1-score is 0.7292390884511395
+the best eval f1 is 0.7292, saving model !!
+***** Running train *****
+The F1-score is 0.8472727272727272
+the best eval f1 is 0.8473, saving model !!
+***** Running train *****
+The F1-score is 0.8643626904496469
+the best eval f1 is 0.8644, saving model !!
+***** Running train *****
+The F1-score is 0.8820826952526798
+the best eval f1 is 0.8821, saving model !!
+***** Running train *****
+The F1-score is 0.8699619771863117
+***** Running train *****
+The F1-score is 0.8719489297784454
+Early stop in 5 epoch!
