@@ -1,8 +1,8 @@
-CUDA_VISIBLE_DEVICES=6 python run_ner.py \
+CUDA_VISIBLE_DEVICES=2 python run_ner.py \
     --dataset DuEE1.0 \
     --event_type role \
     --max_len 150 \
-    --per_gpu_train_batch_size 70 \
+    --per_gpu_train_batch_size 64 \
     --num_train_epochs 30 \
     --per_gpu_eval_batch_size 48 \
     --gradient_accumulation_steps 1 \

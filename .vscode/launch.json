@@ -1,7 +1,7 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -15,7 +15,7 @@
             //     "--dataset", "DuEE1.0",
             //     "--event_type", "trigger",
             //     "--max_len", "150",
-            //     "--per_gpu_train_batch_size", "64",
+            //     "--per_gpu_train_batch_size", "48",
             //     "--num_train_epochs", "30",
             //     "--per_gpu_eval_batch_size", "48",
             //     "--gradient_accumulation_steps", "1",
@@ -23,13 +23,28 @@
             //     "--learning_rate", "1e-5",
             //     "--linear_learning_rate", "1e-5",
             //     "--early_stop", "45"
-            // ]
+            //     ]
+            // "args": [
+            //     "--dataset", "DuEE1.0",
+            //     "--event_type", "role",
+            //     "--max_len", "150",
+            //     "--per_gpu_train_batch_size", "4",
+            //     "--num_train_epochs", "30",
+            //     "--per_gpu_eval_batch_size", "48",
+            //     "--gradient_accumulation_steps", "1",
+            //     "--model_name_or_path", "/data/qingyang/data/chinese-roberta-wwm-ext",
+            //     "--learning_rate", "1e-5",
+            //     "--linear_learning_rate", "1e-5",
+            //     "--early_stop", "45"
+            //     ]
             "args": [
-                "--trigger_file", "./output/DuEE1.0/trigger_64_B/test_result.json",
-                "--role_file", "./output/DuEE1.0/role_64_B/test_result.json",
+                "--trigger_file", "./output/DuEE1.0/role/test_result.json",
+                "--role_file", "./output/DuEE1.0/role/test_result.json",
                 "--schema_file", "./conf/DuEE1.0/event_schema.json",
-                "--save_path","./output/DuEE1.0/duee_surbot.json"
-            ]
+                "--save_path", "./output/DuEE1.0/duee_surbot.json",
+                
+                ]
         }
-    ]
+    ],
+   
 }

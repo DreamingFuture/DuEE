@@ -1,3 +1,20 @@
+# 粘合在一起的方法
+1. 数据预处理的时候2件事
+    1. 将role_tag.dict 变成trigger和role一起的，不用管trigger因为不用他训练
+    2. 将trigger标注好的数据输入到role的标注中，将trigger和role一起的标注存储在role文件夹下
+2. 运行时候要这么做
+    1. 如果更改了测试数据，先改 our_test.py 再改 duee_1_data_prepare.py(更改trigger和role的test文件路径为our_test.py的输出)
+    2. 分别运行 
+        - 2.sh 使用role下边的标注数据进行训练
+        - 3.sh 预测trigger，更改fine_tunning_model_path为role下
+        - 4.sh 预测role，不需要改动
+        - 5.sh 合并数据，trigger_file改成role下的测试结果
+        - 注：如果更改了测试数据，3.sh与4.sh需要更改test_json
+
+
+
+
+
 # 项目说明  
 百度2021年语言与智能技术竞赛多形态信息抽取赛道事件抽取部分Pytorch版baseline
 比赛链接:https://aistudio.baidu.com/aistudio/competition/detail/65?isFromLuge=true

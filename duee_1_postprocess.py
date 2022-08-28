@@ -18,6 +18,14 @@ import json
 
 from utils.utils import read_by_lines, write_by_lines, extract_result
 
+def get_type(pred_event_trigger):
+    trigger_type = []
+    role_type = []
+    for item in pred_event_trigger:
+        item = json.loads(item)
+        trigger_type.append(item['event_type'])
+        role_type += [ role['role'] for role in item['role_list']]
+    return trigger_type, role_type
 
 def predict_data_process(trigger_file, role_file, schema_file, save_path):
     """predict_data_process"""
@@ -25,6 +33,7 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
     trigger_datas = read_by_lines(trigger_file)
     role_data = read_by_lines(role_file)
     schema_datas = read_by_lines(schema_file)
+    trigger_types, role_types = get_type(schema_datas)
     print("trigger predict {} load from {}".format(len(trigger_datas), trigger_file))
     print("role predict {} load from {}".format(len(role_data), role_file))
     print("schema {} load from {}".format(len(schema_datas), schema_file))
@@ -42,6 +51,8 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
         role_ret = {}
         for r in r_ret:
             role_type = r["type"]
+            if role_type not in role_types:
+                continue
             if role_type not in role_ret:
                 role_ret[role_type] = []
             role_ret[role_type].append("".join(r["text"]))
@@ -50,9 +61,17 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
     for d in trigger_datas:
         d_json = json.loads(d)
         t_ret = extract_result(d_json["text"], d_json["pred"]["labels"])
-        pred_event_types = list(set([t["type"] for t in t_ret]))
+        
+        # 保证pred_event_types里都是schema里面的事件类型，防止role进入
+        pred_event_types = []
+        temp = list(set([t["type"] for t in t_ret]))
+        for item in temp:
+            if item in trigger_types:
+                pred_event_types.append(item)
         pred_event_trigger = dict()
         for t in t_ret:
+            # if t["type"] not in trigger_types:
+            #     continue
             if t["type"] in pred_event_trigger:
                 pred_event_trigger[t["type"]] += ''.join(t["text"])
             else:
