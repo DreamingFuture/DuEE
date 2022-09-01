@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=1 python predict_ner.py \
+CUDA_VISIBLE_DEVICES=4 python predict_ner.py \
 --dataset DuEE1.0 \
 --event_type role \
 --max_len 250 \
