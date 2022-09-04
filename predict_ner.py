@@ -29,16 +29,21 @@ def main():
                         type=str,
                         required=True,
                         help="test json path")
+    parser.add_argument("--predict_save_path",
+                        type=str,
+                        default="",
+                        help="prediction输出位置"
+                        )
     args = parser.parse_args()
 
     print(json.dumps(vars(args), sort_keys=True, indent=4, separators=(', ', ': '), ensure_ascii=False))
     init_logger(log_file="./log/{}.log".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
     seed_everything(args.seed)
 
-    args.output_model_path = os.path.join(args.output_dir, args.dataset, args.event_type, "best_model.pkl")
-    # 设置保存目录
-    if not os.path.exists(os.path.dirname(args.output_model_path)):
-        os.makedirs(os.path.dirname(args.output_model_path))
+    # args.output_model_path = os.path.join(args.output_dir, args.dataset, args.event_type, "best_model.pkl")
+    # # 设置保存目录
+    # if not os.path.exists(os.path.dirname(args.output_model_path)):
+    #     os.makedirs(os.path.dirname(args.output_model_path))
 
     # device
     args.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -99,7 +104,8 @@ def main():
     for sent, ret in zip(sentences, results):
         sent["pred"] = ret
     sentences = [json.dumps(sent, ensure_ascii=False) for sent in sentences]
-    args.predict_save_path = os.path.join("./output", args.dataset, args.event_type, "test_result.json")
+    if not args.predict_save_path:
+        args.predict_save_path = os.path.join("./output", args.dataset, args.event_type, "test_result.json")
     print("saving data {} to {}".format(len(sentences), args.predict_save_path))
     write_by_lines(args.predict_save_path, sentences)
 

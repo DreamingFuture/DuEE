@@ -65,10 +65,13 @@ class ChunkEvaluator(object):
         """
         labels = labels.cpu().numpy()
         predictions = predictions.cpu().numpy()
-        unpad_labels = [[
-            self.id2label_dict[index]
-            for index in labels[sent_index][1:lengths[sent_index]-1]
-        ] for sent_index in range(len(lengths))]
+        try:
+            unpad_labels = [[
+                self.id2label_dict[index]
+                for index in labels[sent_index][1:lengths[sent_index]-1]
+            ] for sent_index in range(len(lengths))]
+        except:
+            a = 1
         unpad_predictions = [[
             self.id2label_dict.get(index, "O")
             for index in predictions[sent_index][1:lengths[sent_index]-1]

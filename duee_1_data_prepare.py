@@ -13,9 +13,14 @@
 # limitations under the License.
 """duee 1.0 dataset process"""
 import os
-
 from data.data_utils import schema_process, data_process
 from utils.utils import write_by_lines
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--test_inputName', type=str, default='subor_news.json')
+
+args = parser.parse_args()
 
 def process_labels(labels_list):
     for i in range(len(labels_list)):
@@ -59,7 +64,7 @@ if __name__ == "__main__":
     dev_tri = data_process("{}/duee_dev.json".format(data_dir), "trigger", type="duee1")
     write_by_lines("{}/dev.tsv".format(trigger_save_dir), dev_tri)
     # 测试集的数据改成tsv要改这里
-    test_tri = data_process("{}/subor_news.json".format(data_dir), "trigger", type="duee1")
+    test_tri = data_process("{}/{}".format(data_dir, args.test_inputName), "trigger", type="duee1")
     write_by_lines("{}/test.tsv".format(trigger_save_dir), test_tri)
     print("train {} dev {} test {}".format(
         len(train_tri), len(dev_tri), len(test_tri)))
@@ -77,7 +82,7 @@ if __name__ == "__main__":
     dev_role = data_process("{}/duee_dev.json".format(data_dir), "role", type="duee1", labels_list=dev_tri)
     write_by_lines("{}/dev.tsv".format(role_save_dir), dev_role)
     # 测试集的数据改成tsv要改这里
-    test_role = data_process("{}/subor_news.json".format(data_dir), "role", type="duee1", is_predict=True)
+    test_role = data_process("{}/{}".format(data_dir, args.test_inputName), "role", type="duee1", is_predict=True)
     write_by_lines("{}/test.tsv".format(role_save_dir), test_role)
     print("train {} dev {} test {}".format(len(train_role), len(dev_role), len(test_role)))
     print("=================end schema process==============")
