@@ -1,0 +1,79 @@
+The nums of the train_dataset features is 6770
+The nums of the eval_dataset features is 1840
+***** Running train *****
+The F1-score is 0.7965327143478892
+the best eval f1 is 0.7965, saving model !!
+***** Running train *****
+The F1-score is 0.8130063066382575
+the best eval f1 is 0.8130, saving model !!
+***** Running train *****
+The F1-score is 0.8447790227639443
+the best eval f1 is 0.8448, saving model !!
+***** Running train *****
+The F1-score is 0.8628030682201763
+the best eval f1 is 0.8628, saving model !!
+***** Running train *****
+The F1-score is 0.8717886628845531
+the best eval f1 is 0.8718, saving model !!
+***** Running train *****
+The F1-score is 0.8811238426336514
+the best eval f1 is 0.8811, saving model !!
+***** Running train *****
+The F1-score is 0.8846229420345947
+the best eval f1 is 0.8846, saving model !!
+***** Running train *****
+The F1-score is 0.8873958838569829
+the best eval f1 is 0.8874, saving model !!
+***** Running train *****
+The F1-score is 0.894394174780309
+the best eval f1 is 0.8944, saving model !!
+***** Running train *****
+The F1-score is 0.8962140837036862
+the best eval f1 is 0.8962, saving model !!
+***** Running train *****
+The F1-score is 0.894532632096574
+***** Running train *****
+The F1-score is 0.8973078606153976
+the best eval f1 is 0.8973, saving model !!
+***** Running train *****
+The F1-score is 0.8967772517535807
+***** Running train *****
+The F1-score is 0.9018827001368913
+the best eval f1 is 0.9019, saving model !!
+***** Running train *****
+The F1-score is 0.8981444879673218
+***** Running train *****
+The F1-score is 0.9004442059446084
+***** Running train *****
+The F1-score is 0.9027779438671178
+the best eval f1 is 0.9028, saving model !!
+***** Running train *****
+The F1-score is 0.8960515420925075
+***** Running train *****
+The F1-score is 0.9037618168762499
+the best eval f1 is 0.9038, saving model !!
+***** Running train *****
+The F1-score is 0.9023942614495118
+***** Running train *****
+The F1-score is 0.9027918049343528
+***** Running train *****
+The F1-score is 0.903887212395186
+the best eval f1 is 0.9039, saving model !!
+***** Running train *****
+The F1-score is 0.9028423834407548
+***** Running train *****
+The F1-score is 0.9046927799723955
+the best eval f1 is 0.9047, saving model !!
+***** Running train *****
+The F1-score is 0.9040835025061531
+***** Running train *****
+The F1-score is 0.9038369705362687
+***** Running train *****
+The F1-score is 0.9060184552492885
+the best eval f1 is 0.9060, saving model !!
+***** Running train *****
+The F1-score is 0.9045209317887165
+***** Running train *****
+The F1-score is 0.9051044470380868
+***** Running train *****
+The F1-score is 0.9025953393005953

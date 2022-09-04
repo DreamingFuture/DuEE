@@ -35,14 +35,14 @@ if __name__ == "__main__":
     tags_role_path = "{}/role_tag.dict".format(conf_dir)
     print("\n=================start schema process==============")
     print('input path {}'.format(schema_path))
-    tags_trigger = schema_process(schema_path, "trigger")
+    tags_trigger = schema_process(schema_path, "trigger")[:-1] # 去掉 'O'
     
-    tags_role = schema_process(schema_path, "role")
+    tags_role = schema_process(schema_path, "role", trigger_num=len(tags_trigger))
     # 把trigger的类型和role的拼接在一起，
-    tags_role = tags_trigger[:-1] + tags_role
+    tags_role = tags_trigger + tags_role
     # 然后写入到trigger和role的dict中
-    write_by_lines(tags_trigger_path, tags_trigger)
-    print("save trigger tag {} at {}".format(len(tags_trigger), tags_trigger_path))
+    # write_by_lines(tags_trigger_path, tags_trigger)
+    # print("save trigger tag {} at {}".format(len(tags_trigger), tags_trigger_path))
     write_by_lines(tags_role_path, tags_role)
     print("save trigger tag {} at {}".format(len(tags_role), tags_role_path))
     print("=================end schema process===============")

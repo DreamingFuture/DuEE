@@ -1,4 +1,4 @@
-cuda=4
+cuda=6
 model=role
 # 预测trigger和role
 CUDA_VISIBLE_DEVICES=$cuda python predict_ner.py \

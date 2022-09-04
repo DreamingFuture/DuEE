@@ -70,8 +70,9 @@ class ChunkEvaluator(object):
                 self.id2label_dict[index]
                 for index in labels[sent_index][1:lengths[sent_index]-1]
             ] for sent_index in range(len(lengths))]
-        except:
+        except Exception as e:
             a = 1
+            raise e
         unpad_predictions = [[
             self.id2label_dict.get(index, "O")
             for index in predictions[sent_index][1:lengths[sent_index]-1]

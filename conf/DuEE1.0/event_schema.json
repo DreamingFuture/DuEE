@@ -1,3 +1,4 @@
+{"event_type": "产品抽查", "role_list": [{"role": "被抽者"}, {"role": "抽查者"}], "id": "id_new_choucha", "class": "产品抽查"}
 {"event_type": "财经/交易-出售/收购", "role_list": [{"role": "时间"}, {"role": "出售方"}, {"role": "交易物"}, {"role": "出售价格"}, {"role": "收购方"}], "id": "804336473abe8b8124d00876a5387151", "class": "财经/交易"}
 {"event_type": "财经/交易-跌停", "role_list": [{"role": "时间"}, {"role": "跌停股票"}], "id": "29a8f7417bf8867ddb8521f647a828d8", "class": "财经/交易"}
 {"event_type": "财经/交易-加息", "role_list": [{"role": "时间"}, {"role": "加息幅度"}, {"role": "加息机构"}], "id": "1fa24bacf1a6ac2e00171018d96fa629", "class": "财经/交易"}

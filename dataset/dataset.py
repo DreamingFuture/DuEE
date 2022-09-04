@@ -152,8 +152,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/rbt3")
     dataset = DuEEEventDataset(args,
-                           data_path="../data/DuEE-Fin/trigger/train.tsv",
-                           tag_path="../conf/DuEE-Fin/trigger_tag.dict",
+                           data_path="../data/DuEE-Fin/role/train.tsv",
+                           tag_path="../conf/DuEE-Fin/role_tag.dict",
                            tokenizer=tokenizer)
     test_iter = DataLoader(dataset,
                            shuffle=False,
