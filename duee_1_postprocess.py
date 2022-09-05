@@ -69,11 +69,13 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
             if item in trigger_types:
                 pred_event_types.append(item)
         pred_event_trigger = dict()
+        if "产品行为-召回" in pred_event_types:
+            a = 1
         for t in t_ret:
             # if t["type"] not in trigger_types:
             #     continue
             if t["type"] in pred_event_trigger:
-                pred_event_trigger[t["type"]] += ''.join(t["text"])
+                pred_event_trigger[t["type"]] += '/'+''.join(t["text"])
             else:
                 pred_event_trigger[t["type"]] = ''.join(t["text"])
         event_list = []

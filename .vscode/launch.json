@@ -11,6 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
+            // 训练
             // "args": [
             //     "--dataset", "DuEE1.0",
             //     "--event_type", "role",
@@ -24,22 +25,26 @@
             //     "--linear_learning_rate", "1e-5",
             //     "--early_stop", "45"
             //     ],
-            "args": [
-                "--dataset", "DuEE1.0" ,
-                "--event_type", "role" ,
-                "--max_len", "250" ,
-                "--per_gpu_eval_batch_size", "128" ,
-                "--model_name_or_path", "/data/qingyang/data/chinese-roberta-wwm-ext" ,
-                "--fine_tunning_model_path", "./output/DuEE1.0/role/best_model.pkl" ,
-                "--test_json", "./data/DuEE1.0/subor_news.json" ,
-                "--predict_save_path", "./output/DuEE1.0/role/test_result.json", 
-            ]
+
+            // 测试
             // "args": [
-            //     "--trigger_file", "./output/DuEE1.0/role/test_result.json",
-            //     "--role_file", "./output/DuEE1.0/role/test_result.json",
-            //     "--schema_file", "./conf/DuEE1.0/event_schema.json",
-            //     "--save_path", "./output/DuEE1.0/duee_surbot.json",                
-            //     ]
+            //     "--dataset", "DuEE1.0" ,
+            //     "--event_type", "role" ,
+            //     "--max_len", "250" ,
+            //     "--per_gpu_eval_batch_size", "128" ,
+            //     "--model_name_or_path", "/data/qingyang/data/chinese-roberta-wwm-ext" ,
+            //     "--fine_tunning_model_path", "./output/DuEE1.0/role/best_model.pkl" ,
+            //     "--test_json", "./data/DuEE1.0/subor_news.json" ,
+            //     "--predict_save_path", "./output/DuEE1.0/role/test_result.json", 
+            // ]
+
+            // 后处理
+            "args": [
+                "--trigger_file", "./output/DuEE1.0/role/test_result.json",
+                "--role_file", "./output/DuEE1.0/role/test_result.json",
+                "--schema_file", "./conf/DuEE1.0/event_schema.json",
+                "--save_path", "./output/DuEE1.0/duee_surbot.json",                
+                ]
         }
     ],
    
