@@ -18,7 +18,32 @@ import json
 
 from utils.utils import read_by_lines, write_by_lines, extract_result
 
-need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '司法行为-举报', '组织关系-裁员', ] # '财经/交易-出售/收购'
+need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', ] # '司法行为-举报',  '财经/交易-出售/收购'
+
+def merge_news(res:list) -> list:
+    titles = dict()
+    for record in res:
+        text_id = record['id']
+        # 存title
+        if text_id[-1] == '0':
+            titles[text_id] = record['text']
+    
+    content_list = []
+    id1 = ''
+    for item in res:
+        if id1 == item['id'].split('-')[1]:
+            texts += item['text'] # 拼接摘要
+            event_list += item['event_list'] # 拼接抽取结果
+            # print(item["id"])
+        else:
+            # 先存上一个新闻，id1不为0
+            if id1:
+                content_list.append({"id":f'id-{id1}', "title": titles[f'id-{id1}-0'] ,"text": texts, "event_list": event_list})
+            # 继续下一个新闻
+            id1 = item['id'].split('-')[1]
+            texts = item['text']
+            event_list = item['event_list']
+    return content_list
 
 def get_type(pred_event_trigger):
     trigger_type = []
@@ -124,6 +149,8 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
             "text": d_json["text"],
             "event_list": event_list
         })
+    
+    pred_ret = merge_news(pred_ret)
     pred_ret = [json.dumps(r, ensure_ascii=False) for r in pred_ret]
     print("submit data {} save to {}".format(len(pred_ret), save_path))
     write_by_lines(save_path, pred_ret)
