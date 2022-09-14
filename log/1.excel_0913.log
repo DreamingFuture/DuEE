@@ -1,0 +1,117 @@
+********开始处理tag.dict 和 tsv文件********
+
+=================DUEE 1.0 DATASET==============
+
+=================start schema process==============
+input path ./conf/DuEE1.0/event_schema.json
+save trigger tag 379 at ./conf/DuEE1.0/role_tag.dict
+=================end schema process===============
+
+=================start sentence process==============
+
+----trigger------for dir ./data/DuEE1.0 to ./data/DuEE1.0/trigger
+train 5648 dev 1549 test 2551
+
+----role------for dir ./data/DuEE1.0 to ./data/DuEE1.0/role
+train 6771 dev 1841 test 2551
+=================end schema process==============
+********开始预测trigger和role********
+{
+    "adam_epsilon": 1e-08, 
+    "dataset": "DuEE1.0", 
+    "do_distri_train": false, 
+    "early_stop": 8, 
+    "event_type": "role", 
+    "fine_tunning_model_path": "./output/DuEE1.0/role/best_model.pkl", 
+    "gradient_accumulation_steps": 1, 
+    "learning_rate": 1e-05, 
+    "linear_learning_rate": 0.001, 
+    "max_len": 250, 
+    "model_name_or_path": "/data/qingyang/data/chinese-roberta-wwm-ext", 
+    "num_train_epochs": 50.0, 
+    "output_dir": "./output", 
+    "overwrite_cache": false, 
+    "per_gpu_eval_batch_size": 128, 
+    "per_gpu_train_batch_size": 8, 
+    "predict_save_path": "./output/DuEE1.0/role/test_result.json", 
+    "seed": 66, 
+    "stride": 100, 
+    "test_json": "./data/DuEE1.0/duee_surbot.json", 
+    "weight_decay": 0.01
+}
+tokenizing...:   0%|          | 0/2550 [00:00<?, ?it/s]tokenizing...:  12%|█▏        | 295/2550 [00:00<00:00, 2942.46it/s]tokenizing...:  24%|██▍       | 613/2550 [00:00<00:00, 3078.68it/s]tokenizing...:  37%|███▋      | 936/2550 [00:00<00:00, 3145.34it/s]tokenizing...:  49%|████▉     | 1251/2550 [00:00<00:00, 3103.26it/s]tokenizing...:  62%|██████▏   | 1579/2550 [00:00<00:00, 3162.96it/s]tokenizing...:  75%|███████▍  | 1904/2550 [00:00<00:00, 3191.14it/s]tokenizing...:  87%|████████▋ | 2224/2550 [00:00<00:00, 3153.46it/s]tokenizing...: 100%|█████████▉| 2540/2550 [00:00<00:00, 3060.75it/s]tokenizing...: 100%|██████████| 2550/2550 [00:00<00:00, 3102.02it/s]
+09/13/2022 14:17:22 - INFO - root -   The nums of the test_dataset features is 2550
+Some weights of the model checkpoint at /data/qingyang/data/chinese-roberta-wwm-ext were not used when initializing BertModel: ['cls.predictions.decoder.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.dense.bias', 'cls.seq_relationship.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.seq_relationship.weight', 'cls.predictions.bias', 'cls.predictions.transform.LayerNorm.bias']
+- This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:00<00:18,  1.03it/s] 10%|█         | 2/20 [00:01<00:14,  1.20it/s] 15%|█▌        | 3/20 [00:02<00:12,  1.36it/s] 20%|██        | 4/20 [00:02<00:10,  1.50it/s] 25%|██▌       | 5/20 [00:03<00:09,  1.60it/s] 30%|███       | 6/20 [00:03<00:08,  1.68it/s] 35%|███▌      | 7/20 [00:04<00:07,  1.81it/s] 40%|████      | 8/20 [00:05<00:06,  1.73it/s] 45%|████▌     | 9/20 [00:05<00:06,  1.80it/s] 50%|█████     | 10/20 [00:06<00:05,  1.80it/s] 55%|█████▌    | 11/20 [00:06<00:05,  1.69it/s] 60%|██████    | 12/20 [00:07<00:04,  1.71it/s] 65%|██████▌   | 13/20 [00:07<00:03,  1.77it/s] 65%|██████▌   | 13/20 [00:08<00:04,  1.58it/s]
+Traceback (most recent call last):
+  File "predict_ner.py", line 114, in <module>
+    main()
+  File "predict_ner.py", line 93, in main
+    probs = F.softmax(logits, dim=-1).cpu()
+KeyboardInterrupt
+nohup: ignoring input
+********开始处理tag.dict 和 tsv文件********
+
+=================DUEE 1.0 DATASET==============
+
+=================start schema process==============
+input path ./conf/DuEE1.0/event_schema.json
+save trigger tag 379 at ./conf/DuEE1.0/role_tag.dict
+=================end schema process===============
+
+=================start sentence process==============
+
+----trigger------for dir ./data/DuEE1.0 to ./data/DuEE1.0/trigger
+train 5648 dev 1549 test 2551
+
+----role------for dir ./data/DuEE1.0 to ./data/DuEE1.0/role
+train 6771 dev 1841 test 2551
+=================end schema process==============
+********开始预测trigger和role********
+{
+    "adam_epsilon": 1e-08, 
+    "dataset": "DuEE1.0", 
+    "do_distri_train": false, 
+    "early_stop": 8, 
+    "event_type": "role", 
+    "fine_tunning_model_path": "./output/DuEE1.0/role/best_model.pkl", 
+    "gradient_accumulation_steps": 1, 
+    "learning_rate": 1e-05, 
+    "linear_learning_rate": 0.001, 
+    "max_len": 250, 
+    "model_name_or_path": "/data/qingyang/data/chinese-roberta-wwm-ext", 
+    "num_train_epochs": 50.0, 
+    "output_dir": "./output", 
+    "overwrite_cache": false, 
+    "per_gpu_eval_batch_size": 128, 
+    "per_gpu_train_batch_size": 8, 
+    "predict_save_path": "./output/DuEE1.0/role/test_result.json", 
+    "seed": 66, 
+    "stride": 100, 
+    "test_json": "./data/DuEE1.0/duee_surbot.json", 
+    "weight_decay": 0.01
+}
+tokenizing...:   0%|          | 0/2550 [00:00<?, ?it/s]tokenizing...:   8%|▊         | 213/2550 [00:00<00:01, 2126.25it/s]tokenizing...:  20%|██        | 519/2550 [00:00<00:00, 2674.82it/s]tokenizing...:  33%|███▎      | 843/2550 [00:00<00:00, 2929.08it/s]tokenizing...:  46%|████▌     | 1172/2550 [00:00<00:00, 3070.73it/s]tokenizing...:  58%|█████▊    | 1480/2550 [00:00<00:00, 3058.26it/s]tokenizing...:  71%|███████   | 1816/2550 [00:00<00:00, 3157.96it/s]tokenizing...:  84%|████████▍ | 2145/2550 [00:00<00:00, 3198.71it/s]tokenizing...:  97%|█████████▋| 2465/2550 [00:00<00:00, 3077.30it/s]tokenizing...: 100%|██████████| 2550/2550 [00:00<00:00, 3031.48it/s]
+09/13/2022 14:18:37 - INFO - root -   The nums of the test_dataset features is 2550
+Some weights of the model checkpoint at /data/qingyang/data/chinese-roberta-wwm-ext were not used when initializing BertModel: ['cls.predictions.transform.dense.bias', 'cls.predictions.decoder.weight', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.weight', 'cls.predictions.bias', 'cls.seq_relationship.bias']
+- This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:01<00:19,  1.01s/it] 10%|█         | 2/20 [00:01<00:15,  1.16it/s] 15%|█▌        | 3/20 [00:02<00:12,  1.33it/s] 20%|██        | 4/20 [00:02<00:10,  1.48it/s] 25%|██▌       | 5/20 [00:03<00:09,  1.60it/s] 30%|███       | 6/20 [00:04<00:08,  1.69it/s] 35%|███▌      | 7/20 [00:04<00:07,  1.82it/s] 40%|████      | 8/20 [00:05<00:06,  1.73it/s] 45%|████▌     | 9/20 [00:05<00:06,  1.80it/s] 50%|█████     | 10/20 [00:06<00:05,  1.81it/s] 55%|█████▌    | 11/20 [00:06<00:05,  1.74it/s] 60%|██████    | 12/20 [00:07<00:04,  1.76it/s] 65%|██████▌   | 13/20 [00:07<00:03,  1.81it/s] 70%|███████   | 14/20 [00:08<00:03,  1.80it/s] 75%|███████▌  | 15/20 [00:09<00:02,  1.76it/s] 80%|████████  | 16/20 [00:09<00:02,  1.77it/s] 85%|████████▌ | 17/20 [00:10<00:01,  1.82it/s] 90%|█████████ | 18/20 [00:10<00:01,  1.82it/s] 95%|█████████▌| 19/20 [00:11<00:00,  1.86it/s]100%|██████████| 20/20 [00:11<00:00,  1.92it/s]100%|██████████| 20/20 [00:11<00:00,  1.71it/s]
+2550
+2550
+saving data 2550 to ./output/DuEE1.0/role/test_result.json
+********合并预测结果，输出预测文件********
+trigger predict 2550 load from ./output/DuEE1.0/role/test_result.json
+role predict 2550 load from ./output/DuEE1.0/role/test_result.json
+schema 66 load from ./conf/DuEE1.0/event_schema.json
+submit data 2550 save to ./output/DuEE1.0/duee_surbot.json

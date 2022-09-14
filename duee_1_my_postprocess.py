@@ -144,13 +144,21 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
                     arguments.append({"role": role_type, "argument": arg})
             event = {"event_type": event_type,"trigger": pred_event_trigger[event_type], "arguments": arguments}
             event_list.append(event)
-        pred_ret.append({
-            "id": d_json["id"],
-            "text": d_json["text"],
-            "event_list": event_list
-        })
+        if 'id_old' in d_json:
+            pred_ret.append({
+                "id": d_json["id"],
+                "id_old":d_json["id_old"],
+                "text": d_json["text"],
+                "event_list": event_list
+            })
+        else:
+            pred_ret.append({
+                "id": d_json["id"],
+                "text": d_json["text"],
+                "event_list": event_list
+            })
     
-    pred_ret = merge_news(pred_ret)
+    # pred_ret = merge_news(pred_ret)
     pred_ret = [json.dumps(r, ensure_ascii=False) for r in pred_ret]
     print("submit data {} save to {}".format(len(pred_ret), save_path))
     write_by_lines(save_path, pred_ret)
