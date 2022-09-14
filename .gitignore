@@ -2,4 +2,4 @@
 *.pkl
 data/
 .ipynb_checkpoints/
-output
+output/
