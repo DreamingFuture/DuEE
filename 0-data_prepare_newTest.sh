@@ -4,9 +4,9 @@
 echo "开始数据预处理"
 input_name=news_5w.jsonl
 test_name=subor_news.json
-# python /data/qingyang/event_extration/DuEE_merge/data/DuEE1.0/our_test.py \
-# 	--input_name $input_name \
-# 	--output_name $test_name
+python /data/qingyang/event_extration/DuEE_merge/data/DuEE1.0/our_test.py \
+	--input_name $input_name \
+	--output_name $test_name
 
 # 运行数据预处理程序
 # 生成conf下的dict文件（trigger和role的都要是最新类别数

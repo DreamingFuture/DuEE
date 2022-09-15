@@ -69,7 +69,7 @@ if __name__ == "__main__":
     print("train {} dev {} test {}".format(
         len(train_tri), len(dev_tri), len(test_tri)))
 
-    # 训练集和测试集的标注结果，会输入到role中，在标注的基础上继续标注role
+    # 训练集和测试集的标注结果，会输入到role中，在trigger标注的基础上继续标注role
     train_tri = process_labels(train_tri)[1:]
     dev_tri = process_labels(dev_tri)[1:]
 

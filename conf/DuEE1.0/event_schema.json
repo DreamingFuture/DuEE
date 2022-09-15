@@ -1,3 +1,5 @@
+{"event_type": "服务供货", "role_list": [{"role": "供货者"}, {"role": "被供货"}], "id": "id_new_gonghuo", "class": "服务供货"}
+{"event_type": "项目投资", "role_list": [{"role": "投资者"}, {"role": "被投资"} ,{"role": "金额"},{"role": "地点"}], "id": "id_new_xiangmutouzi", "class": "项目投资"}
 {"event_type": "产品抽查", "role_list": [{"role": "被抽者"}, {"role": "抽查者"}], "id": "id_new_choucha", "class": "产品抽查"}
 {"event_type": "财经/交易-出售/收购", "role_list": [{"role": "时间"}, {"role": "出售方"}, {"role": "交易物"}, {"role": "出售价格"}, {"role": "收购方"}], "id": "804336473abe8b8124d00876a5387151", "class": "财经/交易"}
 {"event_type": "财经/交易-跌停", "role_list": [{"role": "时间"}, {"role": "跌停股票"}], "id": "29a8f7417bf8867ddb8521f647a828d8", "class": "财经/交易"}

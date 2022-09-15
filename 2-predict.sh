@@ -1,15 +1,15 @@
 cuda=6
 model=role
 # 预测trigger和role
-# CUDA_VISIBLE_DEVICES=$cuda python predict_ner.py \
-# --dataset DuEE1.0 \
-# --event_type role \
-# --max_len 250 \
-# --per_gpu_eval_batch_size 128 \
-# --model_name_or_path /data/qingyang/data/chinese-roberta-wwm-ext \
-# --fine_tunning_model_path ./output/DuEE1.0/${model}/best_model.pkl \
-# --test_json ./data/DuEE1.0/subor_news.json \
-# --predict_save_path ./output/DuEE1.0/${model}/test_result.json
+CUDA_VISIBLE_DEVICES=$cuda python predict_ner.py \
+--dataset DuEE1.0 \
+--event_type role \
+--max_len 250 \
+--per_gpu_eval_batch_size 128 \
+--model_name_or_path /data/qingyang/data/chinese-roberta-wwm-ext \
+--fine_tunning_model_path ./output/DuEE1.0/${model}/best_model.pkl \
+--test_json ./data/DuEE1.0/subor_news.json \
+--predict_save_path ./output/DuEE1.0/${model}/test_result.json
 
 # 合并预测结果，输出预测文件
 python duee_1_postprocess.py \
