@@ -2,6 +2,7 @@
 # 输入输出文件名变成arg
 input_name=news_1w.jsonl
 test_name=duee_surbot.json
+test_name=duee_surbot_8k.json
 # echo "********开始数据预处理********"
 # python /data/qingyang/event_extration/DuEE_merge/data/DuEE1.0/our_test.py \
 # 	--input_name $input_name \

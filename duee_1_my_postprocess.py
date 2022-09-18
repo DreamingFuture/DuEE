@@ -18,7 +18,7 @@ import json
 
 from utils.utils import read_by_lines, write_by_lines, extract_result
 
-need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', ] # '司法行为-举报',  '财经/交易-出售/收购'
+need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', '司法行为-举报'] # '司法行为-举报',  '财经/交易-出售/收购''服务供货', "项目投资",
 
 def merge_news(res:list) -> list:
     titles = dict()
