@@ -18,7 +18,7 @@ import json
 
 from utils.utils import read_by_lines, write_by_lines, extract_result
 
-need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', '司法行为-举报'] # '司法行为-举报',  '财经/交易-出售/收购''服务供货', "项目投资",
+need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', '司法行为-举报', "项目投资"] # '司法行为-举报',  '财经/交易-出售/收购', '服务供货'
 
 def merge_news(res:list) -> list:
     titles = dict()
@@ -133,6 +133,18 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
                     continue
             elif event_type == "财经/交易-出售/收购":
                 pass
+            elif event_type == "服务供货":
+                need_trigger = '供应/供货/进口'.split('/')
+                # trigger存在存1
+                judge = [1 if item in pred_event_trigger[event_type] else 0 for item in need_trigger]
+                # 任一need trigger存在，sum > 0
+                judge = sum(judge)
+                if not judge:
+                    continue
+            elif event_type == "项目投资":
+                if '投资' not in pred_event_trigger[event_type]:
+                    continue
+                
             role_list = schema[event_type]
             arguments = []
             for role_type, ags in sent_role_mapping[d_json["id"]].items():
@@ -144,10 +156,10 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
                     arguments.append({"role": role_type, "argument": arg})
             event = {"event_type": event_type,"trigger": pred_event_trigger[event_type], "arguments": arguments}
             event_list.append(event)
-        if 'id_old' in d_json:
+        if 'id_new' in d_json:
             pred_ret.append({
                 "id": d_json["id"],
-                "id_old":d_json["id_old"],
+                "id_new":d_json["id_new"],
                 "text": d_json["text"],
                 "event_list": event_list
             })
@@ -162,6 +174,43 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
     pred_ret = [json.dumps(r, ensure_ascii=False) for r in pred_ret]
     print("submit data {} save to {}".format(len(pred_ret), save_path))
     write_by_lines(save_path, pred_ret)
+
+def main(predict_save_path:str = None, output_path:str = None):
+    
+    if predict_save_path is None:
+        raise TypeError("predict_save_path 不能为 None")
+
+    if output_path is None:
+        raise TypeError("output_path 不能为 None")
+
+
+    parser = argparse.ArgumentParser(
+        description="Official evaluation script for DuEE version 1.0")
+    parser.add_argument(
+        "--trigger_file", 
+        default=predict_save_path,
+        help="trigger model predict data path"
+        )
+    parser.add_argument(
+        "--role_file", 
+        default=predict_save_path,
+        help="role model predict data path" 
+        )
+    parser.add_argument(
+        "--schema_file", 
+        default="./conf/DuEE1.0/event_schema.json",
+        help="schema file path", 
+        )
+    parser.add_argument(
+        "--save_path", 
+        default=output_path,
+        help="save file path", 
+        )
+    args = parser.parse_args()
+    predict_data_process(args.trigger_file,
+                         args.role_file,
+                         args.schema_file,
+                         args.save_path)    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

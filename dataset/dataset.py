@@ -38,6 +38,9 @@ class DuEEEventDataset(Dataset):
             # skip the head line
             next(fp)
             for line in fp.readlines():
+                if '\t' not in line:
+                    print(line)
+                    continue
                 words, labels = line.strip('\n').split('\t')
                 words = words.split('\002')
                 labels = labels.split('\002')

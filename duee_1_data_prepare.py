@@ -18,7 +18,7 @@ from utils.utils import write_by_lines
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--test_inputName', type=str, default='subor_news.json')
+parser.add_argument('--test_inputName', type=str, default='surbot_news.json')
 
 args = parser.parse_args()
 

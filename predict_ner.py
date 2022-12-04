@@ -1,9 +1,3 @@
-"""
-@Time : 2021/4/158:09
-@Auth : 周俊贤
-@File ：run_ner.py.py
-@DESCRIPTION:
-"""
 import json
 import os
 import time
@@ -16,22 +10,53 @@ from transformers import BertTokenizerFast
 
 from dataset.dataset import collate_fn, DuEEEventDataset
 from model.model import DuEEEvent_model
-from utils.finetuning_argparse import get_argparse
+# from utils.finetuning_argparse import get_argparse
+import argparse
+
 from utils.utils import init_logger, seed_everything, logger, read_by_lines, write_by_lines
 
-def main():
-    parser = get_argparse()
+def main(input_path:str = None, predict_save_path:str = None):
+    parser = argparse.ArgumentParser()
+    # 数据
+    parser.add_argument("--dataset", type=str, default="DuEE1.0", help="train data")
+    parser.add_argument("--event_type", type=str, default="role", help="dev data")
+    parser.add_argument("--max_len", default=250, type=int, help="最大长度")
+    parser.add_argument("--stride", type=int, default=100, help="The total number of n-best predictions to generate in the nbest_predictions.json output file.")
+    parser.add_argument("--overwrite_cache",  default=False, help="")
+
+    #
+    parser.add_argument("--per_gpu_train_batch_size", default=8, type=int, help="训练Batch size的大小")
+    parser.add_argument("--gradient_accumulation_steps", default=1, type=int, help="训练Batch size的大小")
+    parser.add_argument("--per_gpu_eval_batch_size", default=128, type=int, help="验证Batch size的大小")
+
+    # 训练的参数
+    parser.add_argument("--do_distri_train", default=False, help="是否用两个卡并行训练")
+    parser.add_argument("--model_name_or_path", default="/data/qingyang/data/chinese-roberta-wwm-ext", type=str, help="预训练模型的路径")
+    parser.add_argument("--num_train_epochs", default=50.0, type=float, help="训练轮数")
+    parser.add_argument("--early_stop", default=8, type=int, help="早停")
+    parser.add_argument("--learning_rate", default=1e-5, type=float, help="transformer层学习率")
+    parser.add_argument("--linear_learning_rate", default=1e-3, type=float, help="linear层学习率")
+    parser.add_argument("--weight_decay", default=0.01, type=float, help="Weight decay if we apply some.")
+    parser.add_argument("--adam_epsilon", default=1e-8, type=float, help="Epsilon for Adam optimizer.")
+    parser.add_argument("--seed", type=int, default=66, help="random seed for initialization")
+    parser.add_argument("--output_dir", default="./output", type=str, help="保存模型的路径")
     parser.add_argument("--fine_tunning_model_path",
                         type=str,
-                        required=True,
+                        default="./output/DuEE1.0/role/best_model.pkl",
                         help="fine_tuning model path")
-    parser.add_argument("--test_json",
+    if input_path:
+        parser.add_argument("--test_json",
+                        type=str,
+                        default=f"{input_path}",
+                        help="test json path")
+    else:
+        parser.add_argument("--test_json",
                         type=str,
                         required=True,
                         help="test json path")
     parser.add_argument("--predict_save_path",
                         type=str,
-                        default="",
+                        default=f"{predict_save_path}" if predict_save_path else "",
                         help="prediction输出位置"
                         )
     args = parser.parse_args()
@@ -47,6 +72,7 @@ def main():
 
     # device
     args.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # args.device = torch.device("cpu")
 
     # tokenizer
     tokenizer = BertTokenizerFast.from_pretrained(args.model_name_or_path)
