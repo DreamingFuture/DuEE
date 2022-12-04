@@ -12,10 +12,11 @@ import os
 import random
 import time
 from pathlib import Path
+from functools import wraps
 
 import numpy as np
 import torch
-
+import datetime
 
 def seed_everything(seed=1029):
     '''
@@ -175,3 +176,12 @@ def read_by_lines(path):
             result.append(line.strip())
     return result
 
+def cnt_time(func):
+    @wraps(func)
+    def inner(*args, **kwargs):
+        start_time = datetime.datetime.now()
+        res = func(*args, **kwargs)
+        end_time = datetime.datetime.now()
+        print(f"\n函数{func.__name__}的运行时间为：{end_time - start_time}\n")
+        return res
+    return inner

@@ -6,7 +6,7 @@
 
 import os
 from data.data_utils import schema_process, data_process
-from utils.utils import write_by_lines
+from utils.utils import write_by_lines, cnt_time
 import argparse
 import json
 import re
@@ -14,16 +14,20 @@ import jiagu
 import jsonlines
 import predict_ner
 import duee_1_my_postprocess
+from tqdm import tqdm
+import datetime
 
 
-def transform_data_2_need_type(input_path:str, use_content:bool) -> str:
+
+@cnt_time
+def transform_data_2_need_type(input_path:str, input_need_type_path:str, use_content:bool):
+
     print("\n=================Transform Data to Need Type==============")
     print("\n=================use_content:{}==============".format(use_content))
     res = []
     id1 = 0
     with open(input_path, 'r', encoding='utf-8') as f:
-        content = f.readline()
-        while content:
+        for content in tqdm(f.readlines()):
             content = json.loads(content)
             res.append({'text':content['title'], 'id':f'id-{id1}-0', 'news_id':content['news_id']})
             if use_content:
@@ -34,25 +38,17 @@ def transform_data_2_need_type(input_path:str, use_content:bool) -> str:
                 for i, sentence in enumerate(sentences):
                     res.append({'text':sentence, 'id':f'id-{id1}-{i+1}', 'news_id':content['news_id']})
 
-            content = f.readline()
             id1 += 1
-            if id1 % 500 == 499:
-                print('id:',id1,' done!')
+            # if id1 % 500 == 499:
+            #     print('id:',id1,' done!')
     print('id:',id1,' done!')
 
 
     import jsonlines
-    # 添加一个缓冲文件用来存放need_type的测试文件
-    input_need_type_path = input_path.split('.')
-    assert len(input_need_type_path) == 2
-    input_need_type_path = input_need_type_path[0] + "_need_type." + input_need_type_path[1]
-    print("len(input_path.split('.')) != 2")
-        
     with jsonlines.open(input_need_type_path, 'w') as f:
         for item in res:
             f.write(item)
     print("=================end transformation process==============")   
-    return input_need_type_path
 
 def process_labels(labels_list):
     for i in range(len(labels_list)):
@@ -60,6 +56,7 @@ def process_labels(labels_list):
     return labels_list
 
 
+@cnt_time 
 def data_prepare(input_path:str):
     print("\n=================DUEE 1.0 DATASET==============")
     conf_dir = "./conf/DuEE1.0"
@@ -120,16 +117,22 @@ def data_prepare(input_path:str):
     print("train {} dev {} test {}".format(len(train_role), len(dev_role), len(test_role)))
     print("=================end schema process==============")
 
-    
+@cnt_time    
 def event_abstraction_API(input_path:str, output_path:str, use_content:bool = True) -> bool:
     """ 
     1. 先进行数据的预处理
     2. 在进行数据的预测
     3. 最后进行数据的后处理
     """
+    # 输入文件必须是jsonl格式
+    assert input_path[-6:] == ".jsonl"
+    # 添加一个缓冲文件用来存放need_type的测试文件
+    input_need_type_path = input_path[:-6] + "_need_type" + input_path[-6:]
+    # 中间预测结果（都是概率）
     predict_save_path = "./output/DuEE1.0/role/test_result.json"
+    
     # 摘要提取
-    input_need_type_path = transform_data_2_need_type(input_path=input_path, use_content=use_content)
+    transform_data_2_need_type(input_path=input_path, input_need_type_path=input_need_type_path, use_content=use_content)
 
     # 数据预处理
     data_prepare(input_need_type_path)
@@ -140,9 +143,14 @@ def event_abstraction_API(input_path:str, output_path:str, use_content:bool = Tr
     # 预测结果合并
     duee_1_my_postprocess.main(predict_save_path=predict_save_path, output_path=output_path)
 
+    return True
+
 
 if __name__ == "__main__":
     input_path = "API_TEST/test.jsonl"
     output_path = "API_TEST/res.jsonl"
+    # input_path = "data/DuEE1.0/suwen_test/news_5w.jsonl"
+    # output_path = "data/DuEE1.0/suwen_test/surbot_news_res.json"
     use_content = True
     res = event_abstraction_API(input_path=input_path, output_path=output_path, use_content=use_content)
+    end = datetime.datetime.now()

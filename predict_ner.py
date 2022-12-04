@@ -13,8 +13,9 @@ from model.model import DuEEEvent_model
 # from utils.finetuning_argparse import get_argparse
 import argparse
 
-from utils.utils import init_logger, seed_everything, logger, read_by_lines, write_by_lines
+from utils.utils import init_logger, seed_everything, logger, read_by_lines, write_by_lines, cnt_time
 
+@cnt_time 
 def main(input_path:str = None, predict_save_path:str = None):
     parser = argparse.ArgumentParser()
     # 数据

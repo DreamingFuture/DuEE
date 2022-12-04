@@ -1,8 +1,8 @@
 *.tsv
 *.pkl
+*.pyc
 data/
 .ipynb_checkpoints/
 output/
 log/
-__pycache__/*
 */DuEE-Fin/

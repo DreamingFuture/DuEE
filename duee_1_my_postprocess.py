@@ -16,7 +16,7 @@
 import argparse
 import json
 
-from utils.utils import read_by_lines, write_by_lines, extract_result
+from utils.utils import read_by_lines, write_by_lines, extract_result, cnt_time
 
 need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', '司法行为-举报', "项目投资"] # '司法行为-举报',  '财经/交易-出售/收购', '服务供货'
 
@@ -175,6 +175,7 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
     print("submit data {} save to {}".format(len(pred_ret), save_path))
     write_by_lines(save_path, pred_ret)
 
+@cnt_time 
 def main(predict_save_path:str = None, output_path:str = None):
     
     if predict_save_path is None:
