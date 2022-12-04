@@ -156,10 +156,10 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
                     arguments.append({"role": role_type, "argument": arg})
             event = {"event_type": event_type,"trigger": pred_event_trigger[event_type], "arguments": arguments}
             event_list.append(event)
-        if 'id_new' in d_json:
+        if 'news_id' in d_json:
             pred_ret.append({
                 "id": d_json["id"],
-                "id_new":d_json["id_new"],
+                "news_id":d_json["news_id"],
                 "text": d_json["text"],
                 "event_list": event_list
             })
