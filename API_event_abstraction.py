@@ -16,7 +16,7 @@ import predict_ner
 import duee_1_my_postprocess
 
 
-def transform_data_2_need_type(input_path:str, use_content:bool):
+def transform_data_2_need_type(input_path:str, use_content:bool) -> str:
     print("\n=================Transform Data to Need Type==============")
     print("\n=================use_content:{}==============".format(use_content))
     res = []
@@ -40,12 +40,19 @@ def transform_data_2_need_type(input_path:str, use_content:bool):
                 print('id:',id1,' done!')
     print('id:',id1,' done!')
 
+
     import jsonlines
-    with jsonlines.open(input_path, 'w') as f:
+    # 添加一个缓冲文件用来存放need_type的测试文件
+    input_need_type_path = input_path.split('.')
+    assert len(input_need_type_path) == 2
+    input_need_type_path = input_need_type_path[0] + "_need_type." + input_need_type_path[1]
+    print("len(input_path.split('.')) != 2")
+        
+    with jsonlines.open(input_need_type_path, 'w') as f:
         for item in res:
             f.write(item)
     print("=================end transformation process==============")   
-
+    return input_need_type_path
 
 def process_labels(labels_list):
     for i in range(len(labels_list)):
@@ -122,13 +129,13 @@ def event_abstraction_API(input_path:str, output_path:str, use_content:bool = Tr
     """
     predict_save_path = "./output/DuEE1.0/role/test_result.json"
     # 摘要提取
-    transform_data_2_need_type(input_path=input_path, use_content=use_content)
+    input_need_type_path = transform_data_2_need_type(input_path=input_path, use_content=use_content)
 
     # 数据预处理
-    data_prepare(input_path)
+    data_prepare(input_need_type_path)
 
     #进行数据的预测
-    predict_ner.main(input_path=input_path, predict_save_path=predict_save_path)
+    predict_ner.main(input_path=input_need_type_path, predict_save_path=predict_save_path)
 
     # 预测结果合并
     duee_1_my_postprocess.main(predict_save_path=predict_save_path, output_path=output_path)
