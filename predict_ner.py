@@ -16,7 +16,7 @@ import argparse
 from utils.utils import init_logger, seed_everything, logger, read_by_lines, write_by_lines, cnt_time
 
 @cnt_time 
-def main(input_path:str = None, predict_save_path:str = None):
+def predict_main(input_path:str = None, predict_save_path:str = None):
     parser = argparse.ArgumentParser()
     # 数据
     parser.add_argument("--dataset", type=str, default="DuEE1.0", help="train data")
@@ -72,7 +72,7 @@ def main(input_path:str = None, predict_save_path:str = None):
     #     os.makedirs(os.path.dirname(args.output_model_path))
 
     # device
-    args.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    args.device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
     # args.device = torch.device("cpu")
 
     # tokenizer
@@ -138,4 +138,4 @@ def main(input_path:str = None, predict_save_path:str = None):
 
 
 if __name__ == '__main__':
-    main()
+    predict_main()

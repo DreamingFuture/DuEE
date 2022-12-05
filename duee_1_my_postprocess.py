@@ -15,10 +15,51 @@
 
 import argparse
 import json
-
+from LAC import LAC
 from utils.utils import read_by_lines, write_by_lines, extract_result, cnt_time
+import Levenshtein
 
 need_event_type = ['产品抽查', "产品行为-召回", '司法行为-罚款', '组织关系-裁员', '司法行为-举报', "项目投资"] # '司法行为-举报',  '财经/交易-出售/收购', '服务供货'
+
+def fenci_youhua(news):
+        # 装载LAC模型
+        lac = LAC(mode='lac')
+        for new in news: # 针对每一个json
+            if len(new['event_list']): # 含有事件
+                text = lac.run(new['text']) 
+                
+                for event in new['event_list']: # 针对每一个事件
+                    arguments = []
+                    for role in event['arguments']: # 针对每一个事件的arguments
+                        arguments.append(role['argument'])
+                    arguments_fenci = lac.run(arguments)
+                    for index_argument in range(len(arguments_fenci)): # 针对每一个argument
+                        for index_fenci in range(len(arguments_fenci[index_argument][0])): # 针对每一个argument的每一个分词结果
+                            res = arguments_fenci[index_argument][0][index_fenci] # 每一个分词结果
+                            res_argument = []
+                            for index_text_fenci in range(len(text[0])):
+                                if res in text[0][index_text_fenci]: 
+                                    res_argument.append(text[0][index_text_fenci])
+                                    # arguments_fenci[index_argument][0][index_fenci] = text[0][index_text_fenci]
+                                    
+                            # 对原来的进行替换
+                            if len(res_argument) == 1:
+                                arguments_fenci[index_argument][0][index_fenci] = res_argument[0]
+                            else:
+                                min_distance = 100
+                                min_distance_item = arguments_fenci[index_argument][0][index_fenci]
+                                for item in res_argument:
+                                    distance = Levenshtein.distance(arguments_fenci[index_argument][0][index_fenci], item)
+                                    if distance < min_distance:
+                                        min_distance = distance
+                                        min_distance_item = item
+                                arguments_fenci[index_argument][0][index_fenci] = min_distance_item
+
+                    for index_argument in range(len(arguments_fenci)): # 针对每一个argument
+                        # argument = ''.join(arguments_fenci[index_argument][0])
+                        argument = ''.join(sorted(set(arguments_fenci[index_argument][0]), key=arguments_fenci[index_argument][0].index)) # 去重
+                        event['arguments'][index_argument]['argument'] = argument 
+        return news
 
 def merge_news(res:list) -> list:
     titles = dict()
@@ -171,12 +212,13 @@ def predict_data_process(trigger_file, role_file, schema_file, save_path):
             })
     
     # pred_ret = merge_news(pred_ret)
+    # fenci_youhua(pred_ret)
     pred_ret = [json.dumps(r, ensure_ascii=False) for r in pred_ret]
     print("submit data {} save to {}".format(len(pred_ret), save_path))
     write_by_lines(save_path, pred_ret)
 
 @cnt_time 
-def main(predict_save_path:str = None, output_path:str = None):
+def postprocess_main(predict_save_path:str = None, output_path:str = None):
     
     if predict_save_path is None:
         raise TypeError("predict_save_path 不能为 None")

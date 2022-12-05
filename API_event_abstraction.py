@@ -118,7 +118,7 @@ def data_prepare(input_path:str):
     print("=================end schema process==============")
 
 @cnt_time    
-def event_abstraction_API(input_path:str, output_path:str, use_content:bool = True) -> bool:
+def event_abstraction_API(input_path:str, output_path:str, use_content:bool = False) -> bool:
     """ 
     1. 先进行数据的预处理
     2. 在进行数据的预测
@@ -138,19 +138,19 @@ def event_abstraction_API(input_path:str, output_path:str, use_content:bool = Tr
     data_prepare(input_need_type_path)
 
     #进行数据的预测
-    predict_ner.main(input_path=input_need_type_path, predict_save_path=predict_save_path)
+    predict_ner.predict_main(input_path=input_need_type_path, predict_save_path=predict_save_path)
 
     # 预测结果合并
-    duee_1_my_postprocess.main(predict_save_path=predict_save_path, output_path=output_path)
+    duee_1_my_postprocess.postprocess_main(predict_save_path=predict_save_path, output_path=output_path)
 
     return True
 
 
 if __name__ == "__main__":
-    input_path = "API_TEST/test.jsonl"
-    output_path = "API_TEST/res.jsonl"
-    # input_path = "data/DuEE1.0/suwen_test/news_5w.jsonl"
-    # output_path = "data/DuEE1.0/suwen_test/surbot_news_res.json"
-    use_content = True
+    # input_path = "API_TEST/test.jsonl"
+    # output_path = "API_TEST/res.jsonl"
+    input_path = "data/DuEE1.0/suwen_test/news_5w.jsonl"
+    output_path = "data/DuEE1.0/suwen_test/surbot_news_res_FenCiYouHua_noAbstraction.json"
+    use_content = False
     res = event_abstraction_API(input_path=input_path, output_path=output_path, use_content=use_content)
     end = datetime.datetime.now()
